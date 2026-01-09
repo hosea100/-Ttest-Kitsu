@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from './context/ThemeContext';
+import { GlobalStyles } from './styles/GlobalStyles';
+import PlaceholderPage from './pages/PlaceholderPage';
+import styled from 'styled-components';
+
+const AppContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ThemeProvider>
+      <GlobalStyles />
+      <Router>
+        <AppContainer>
+          <Routes>
+            <Route path="/" element={<PlaceholderPage title="Home Page" message="Anime list coming soon..." />} />
+            <Route path="/anime/:id" element={<PlaceholderPage title="Detail Page" message="Anime details coming soon..." />} />
+            <Route path="*" element={<PlaceholderPage title="404 Not Found" message="This page doesn't exist yet." />} />
+          </Routes>
+        </AppContainer>
+      </Router>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
