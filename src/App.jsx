@@ -1,8 +1,11 @@
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { GlobalStyles } from './styles/GlobalStyles';
+import { Header } from './components/Header';
 import PlaceholderPage from './pages/PlaceholderPage';
 import styled from 'styled-components';
+import moment from 'moment';
 
 const AppContainer = styled.div`
   display: flex;
@@ -10,17 +13,31 @@ const AppContainer = styled.div`
   min-height: 100vh;
 `;
 
+const Footer = styled.footer`
+  padding: ${({ theme }) => theme.spacing.xl};
+  text-align: center;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  font-size: ${({ theme }) => theme.typography.fontSizeSm};
+  border-top: 1px solid ${({ theme }) => theme.colors.border};
+  margin-top: auto;
+`;
+
 function App() {
+  const currentYear = moment().format('YYYY');
+
   return (
     <ThemeProvider>
       <GlobalStyles />
       <Router>
         <AppContainer>
+          <Header />
           <Routes>
-            <Route path="/" element={<PlaceholderPage title="Home Page" message="Anime list coming soon..." />} />
-            <Route path="/anime/:id" element={<PlaceholderPage title="Detail Page" message="Anime details coming soon..." />} />
-            <Route path="*" element={<PlaceholderPage title="404 Not Found" message="This page doesn't exist yet." />} />
+            {/* 404 Fallback */}
+            <Route path="*" element={<PlaceholderPage title="404 - Page Not Found"/>} />
           </Routes>
+          <Footer>
+            <p>© {currentYear} AnimeHub. Data provided by Kitsu API.</p>
+          </Footer>
         </AppContainer>
       </Router>
     </ThemeProvider>
