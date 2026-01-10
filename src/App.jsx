@@ -7,8 +7,9 @@ import { GlobalStyles } from './styles/GlobalStyles';
 
 import { Header } from './components/Header';
 
-import PlaceholderPage from './pages/PlaceholderPage';
 import { AnimeListPage } from './pages/AnimeListPage';
+import { AnimeDetailPage } from './pages/AnimeDetailPage';
+import PlaceholderPage from './pages/PlaceholderPage';
 
 const AppContainer = styled.div`
   display: flex;
@@ -37,6 +38,8 @@ function App() {
           <Routes>
             {/* Home page */}
             <Route path="/" element={<AnimeListPage />} />
+            {/* Detail page */}
+            <Route path="/anime/:id" element={<AnimeDetailPage />} />
             {/* 404 Fallback */}
             <Route path="*" element={<PlaceholderPage title="404 - Page Not Found"/>} />
           </Routes>
