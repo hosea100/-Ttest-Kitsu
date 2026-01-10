@@ -1,11 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from './context/ThemeContext';
-import { GlobalStyles } from './styles/GlobalStyles';
-import { Header } from './components/Header';
-import PlaceholderPage from './pages/PlaceholderPage';
 import styled from 'styled-components';
 import moment from 'moment';
+import { ThemeProvider } from './context/ThemeContext';
+import { GlobalStyles } from './styles/GlobalStyles';
+
+import { Header } from './components/Header';
+
+import PlaceholderPage from './pages/PlaceholderPage';
+import { AnimeListPage } from './pages/AnimeListPage';
 
 const AppContainer = styled.div`
   display: flex;
@@ -32,6 +35,8 @@ function App() {
         <AppContainer>
           <Header />
           <Routes>
+            {/* Home page */}
+            <Route path="/" element={<AnimeListPage />} />
             {/* 404 Fallback */}
             <Route path="*" element={<PlaceholderPage title="404 - Page Not Found"/>} />
           </Routes>

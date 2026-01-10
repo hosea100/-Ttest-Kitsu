@@ -29,4 +29,26 @@ apiClient.interceptors.response.use(
   }
 );
 
+/**
+ * Fetch paginated anime list
+ * @param {number} page - Page number (0-indexed)
+ * @param {number} limit - Items per page
+ * @returns {Promise} Anime list data
+ */
+export const fetchAnimeList = async (page = 0, limit = 10) => {
+  try {
+    const offset = page * limit;
+    const response = await apiClient.get('/anime', {
+      params: {
+        'page[limit]': limit,
+        'page[offset]': offset,
+        'fields[anime]': 'canonicalTitle,titles,synopsis,averageRating,posterImage,coverImage,episodeCount,status,startDate,endDate,ageRating,subtype'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch anime list: ${error.message}`);
+  }
+};
+
 export default apiClient;
