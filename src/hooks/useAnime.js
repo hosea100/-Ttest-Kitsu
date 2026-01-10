@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { fetchAnimeList } from '../api/kitsuApi';
+import { fetchAnimeList, fetchAnimeDetail } from '../api/kitsuApi';
 
 /**
  * Custom hook for fetching paginated anime list
@@ -71,4 +71,40 @@ export const useAnimeList = (initialPage = 0, limit = 10) => {
     prevPage,
     refresh
   };
+};
+
+/**
+ * Custom hook for fetching single anime details
+ */
+export const useAnimeDetail = (id) => {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!id) {
+      setLoading(false);
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await fetchAnimeDetail(id);
+        setData(response.data);
+        
+      } catch (err) {
+        setError(err.message);
+        console.error('Error fetching anime details:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  return { data, loading, error };
 };

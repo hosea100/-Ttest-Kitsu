@@ -51,4 +51,22 @@ export const fetchAnimeList = async (page = 0, limit = 10) => {
   }
 };
 
+/**
+ * Fetch single anime details by ID
+ * @param {string} id - Anime ID
+ * @returns {Promise} Anime detail data
+ */
+export const fetchAnimeDetail = async (id) => {
+  try {
+    const response = await apiClient.get(`/anime/${id}`, {
+      params: {
+        'fields[anime]': 'canonicalTitle,titles,synopsis,description,averageRating,posterImage,coverImage,episodeCount,status,startDate,endDate,ageRating,subtype,popularityRank,ratingRank,youtubeVideoId'
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch anime details: ${error.message}`);
+  }
+};
+
 export default apiClient;

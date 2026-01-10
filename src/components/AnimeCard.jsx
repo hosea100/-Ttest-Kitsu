@@ -143,9 +143,7 @@ export const AnimeCard = ({ anime }) => {
   const [imageError, setImageError] = useState(false);
 
   const handleClick = () => {
-    // Delete console.log in production
-    console.log('Anime clicked:', anime);
-    console.log(`Navigate to anime: ${anime.attributes.canonicalTitle}`);
+    navigate(`/anime/${anime.id}`);
   };
 
   const getTitle = () => {
